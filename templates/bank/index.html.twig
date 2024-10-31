@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bank List{% endblock %}
+
+{% block main %}
+<h1>Bank index</h1>
+
+<ul>
+  {% for bank in banks %}
+      <li>{{ bank.name }}</li>
+  <li>
+    <a href="{{ path('bank_show', {'id': bank.id}) }}">Voir</a>
+  </li>
+  <br>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+{# main #}

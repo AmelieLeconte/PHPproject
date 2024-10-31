@@ -1,0 +1,11 @@
+
+bootstrap_menu:
+  menus:
+    main:
+      items:
+        bank:
+          label: 'Banks'
+          route: 'bank_list'
+        coins:
+          label: 'Coins'
+          route: 'coin_list'

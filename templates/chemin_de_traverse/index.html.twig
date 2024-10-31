@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CheminDeTraverse index{% endblock %}
+
+{% block body %}
+    <h1>CheminDeTraverse index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chemin_de_traverse in chemin_de_traverses %}
+            <tr>
+                <td>{{ chemin_de_traverse.id }}</td>
+                <td>{{ chemin_de_traverse.numero }}</td>
+                <td>
+                    <a href="{{ path('app_chemin_de_traverse_show', {'id': chemin_de_traverse.id}) }}">show</a>
+                    <a href="{{ path('app_chemin_de_traverse_edit', {'id': chemin_de_traverse.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_chemin_de_traverse_new') }}">Create new</a>
+{% endblock %}

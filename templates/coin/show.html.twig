@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coin{% endblock %}
+
+{% block body %}
+    <h1>Coin</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ coin.id }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ coin.value }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_coin_index') }}">back to list</a>
+
+    <a href="{{ path('app_coin_edit', {'id': coin.id}) }}">edit</a>
+
+    {{ include('coin/_delete_form.html.twig') }}
+{% endblock %}

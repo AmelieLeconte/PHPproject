@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CheminDeTraverse{% endblock %}
+
+{% block body %}
+    <h1>Edit CheminDeTraverse</h1>
+
+    {{ include('chemin_de_traverse/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_chemin_de_traverse_index') }}">back to list</a>
+
+    {{ include('chemin_de_traverse/_delete_form.html.twig') }}
+{% endblock %}

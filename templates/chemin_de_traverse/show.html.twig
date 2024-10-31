@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1>CheminDeTraverse</h1>
+
+    {% dump chemin_de_traverse %} 
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ chemin_de_traverse.id }}</td> 
+            </tr>
+            <!-- Autres champs ici -->
+        </tbody>
+
+         <h1>Coin</h1>
+
+         {% dump coin %}
+
+      <table class="table">
+          <tbody>
+              <tr>
+                  <th>Id</th>
+                  <td>{{ coin.id }}</td>
+              </tr>
+              <tr>
+                  <th>Coin</th>
+                  <td>{{ coin.value }}</td>
+              </tr>
+              ...
+          </tbody>
+
+
+      <a href="{{ path('coin/list') }}">back to list</a>
+
+
+    <a href="{{ path('app_chemin_de_traverse_index') }}">back to list</a> {# Corrigé avec le bon nom de la route #}
+{% endblock %}
+
