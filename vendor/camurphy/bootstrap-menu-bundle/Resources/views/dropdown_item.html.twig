@@ -1,0 +1,16 @@
+{% apply spaceless %}
+  {% if menu_item.is_divider %}
+    {% if menu_item.index > 0 %}
+      <div class="dropdown-divider"></div>
+    {% endif %}
+
+    {% if menu_item.label is defined %}
+      <h6 class="dropdown-header">{{ menu_item.label }}</h6>
+    {% endif %}
+  {% else %}
+    {% set is_active = dropdown_item_active_style and  menu_item.route is defined and app.request.attributes.get('_route') == menu_item.route %}
+    <a class="dropdown-item{% if is_active %} active{% endif %}"{% if is_active %} aria-current="page"{% endif %} {% include '@BootstrapMenu/href.html.twig' with { menu_item } %}>
+      {{- menu_item.label -}}
+    </a>
+  {% endif %}
+{% endapply %}

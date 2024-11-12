@@ -1,0 +1,21 @@
+{% apply spaceless %}
+  {% set data_attribute_name = 'data-bs-toggle' %}
+
+  {% if bootstrap_version == 4 %}
+    {% set data_attribute_name = 'data-toggle' %}
+  {% endif %}
+
+  {% set is_active = dropdown_active_style and app.request.attributes.get('_route') in menu_item.items|map(item => item.route is defined ? item.route : null) %}
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle{% if is_active %} active{% endif %}"{% if is_active %} aria-current="page"{% endif %} href="#" role="button" {{ data_attribute_name }}="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{- menu_item.label -}}
+    </a>
+    <div class="dropdown-menu">
+      {% for menu_item in menu_item.items %}
+        {% set menu_item = menu_item|merge({ 'index': loop.index0 }) %}
+        {% include '@BootstrapMenu/dropdown_item.html.twig' with { menu_item, dropdown_item_active_style } %}
+      {% endfor %}
+    </div>
+  </li>
+{% endapply %}

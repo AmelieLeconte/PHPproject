@@ -1,0 +1,3 @@
+{% apply spaceless %}
+  href="{% if menu_item.route is defined %}{{ path(menu_item.route, menu_item.route_parameters) }}{% elseif menu_item.url is defined %}{{ menu_item.url }}{% else %}#{% endif %}"
+{% endapply %}
