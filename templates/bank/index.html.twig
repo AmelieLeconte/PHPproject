@@ -6,7 +6,7 @@
 <h1>Bank index</h1>
 
 <ul>
-  {% for bank in banks %}
+  {% for bank in bank %}
       <li>{{ bank.name }}</li>
   <li>
     <a href="{{ path('bank_show', {'id': bank.id}) }}">Voir</a>

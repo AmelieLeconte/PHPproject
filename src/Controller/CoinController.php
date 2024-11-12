@@ -1,15 +1,18 @@
 <?php
 
+
 namespace App\Controller;
 
 use App\Entity\Coin;
 use App\Form\CoinType;
 use App\Repository\CoinRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry; // Ajouté cette ligne
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/coin')]
 final class CoinController extends AbstractController
@@ -22,18 +25,7 @@ final class CoinController extends AbstractController
         ]);
     }
 
-    #[Route('/coin/list', name: 'coin_list', methods: ['GET'])]
-    public function listAction(ManagerRegistry $doctrine): Response
-    {
-        $entityManager = $doctrine->getManager();
-        $coins = $entityManager->getRepository(coin::class)->findAll();
 
-        return $this->render(
-            'coin/index.html.twig',
-            ['coins' => $coins] // Changed 'coin' to 'coins' for consistency
-        );
-    }
-    
     #[Route('/new', name: 'app_coin_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -90,4 +82,5 @@ final class CoinController extends AbstractController
 
         return $this->redirectToRoute('app_coin_index', [], Response::HTTP_SEE_OTHER);
     }
+        
 }

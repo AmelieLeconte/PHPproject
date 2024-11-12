@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MemberRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -30,6 +32,17 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, CheminDeTraverse>
+     */
+    #[ORM\OneToMany(targetEntity: CheminDeTraverse::class, mappedBy: 'member')]
+    private Collection $cheminDeTraverses;
+
+    public function __construct()
+    {
+        $this->cheminDeTraverses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,5 +117,35 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, CheminDeTraverse>
+     */
+    public function getCheminDeTraverses(): Collection
+    {
+        return $this->cheminDeTraverses;
+    }
+
+    public function addCheminDeTraverse(CheminDeTraverse $cheminDeTraverse): static
+    {
+        if (!$this->cheminDeTraverses->contains($cheminDeTraverse)) {
+            $this->cheminDeTraverses->add($cheminDeTraverse);
+            $cheminDeTraverse->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCheminDeTraverse(CheminDeTraverse $cheminDeTraverse): static
+    {
+        if ($this->cheminDeTraverses->removeElement($cheminDeTraverse)) {
+            // set the owning side to null (unless already changed)
+            if ($cheminDeTraverse->getMember() === $this) {
+                $cheminDeTraverse->setMember(null);
+            }
+        }
+
+        return $this;
     }
 }

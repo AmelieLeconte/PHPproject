@@ -30,6 +30,9 @@ class CheminDeTraverse
     #[ORM\ManyToMany(targetEntity: Coin::class)]
     private Collection $coin;
 
+    #[ORM\ManyToOne(inversedBy: 'cheminDeTraverses')]
+    private ?Member $member = null;
+
     public function __construct()
     {
         $this->createur = new ArrayCollection();
@@ -97,6 +100,18 @@ class CheminDeTraverse
     public function removeCoin(Coin $coin): static
     {
         $this->coin->removeElement($coin);
+
+        return $this;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Member $member): static
+    {
+        $this->member = $member;
 
         return $this;
     }

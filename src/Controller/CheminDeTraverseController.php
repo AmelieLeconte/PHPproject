@@ -81,9 +81,12 @@ final class CheminDeTraverseController extends AbstractController
         return $this->redirectToRoute('app_chemin_de_traverse_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{chemin_de_traverse_id}/coin/{coin_id}',
-           methods: ['GET'],
-           name: 'app_chemin_de_traverse_coin_show')]
+    
+    #[Route(
+        '/{chemin_de_traverse_id}/coin/{coin_id}',
+        name: 'app_chemin_de_traverse_coin_show',
+        requirements: ['chemin_de_traverse_id' => '\d+', 'coin_id' => '\d+']
+    )]
    public function coinShow(
        #[MapEntity(id: 'chemin_de_traverse_id')]
        CheminDeTraverse $chemin_de_traverse,
@@ -91,9 +94,26 @@ final class CheminDeTraverseController extends AbstractController
        Coin $coin
    ): Response
    {
-       return $this->render('chemin_de_traverse/coin_show.html.twig', [
+       return $this->render('chemin_de_traverse/coinshow.html.twig', [
            'coin' => $coin,
            'chemin_de_traverse' => $chemin_de_traverse
        ]);
    }
+
+
+   #[Route('/{chemin_de_traverse_id}/coin/list', name: 'app_chemin_de_traverse_coin_list', methods: ['GET'], requirements: ['chemin_de_traverse_id' => '\d+', 'coin_id' => '\d+'])]
+   public function coinlistAction(ManagerRegistry $doctrine, #[MapEntity(id: 'chemin_de_traverse_id')] CheminDeTraverse $chemin_de_traverse, #[MapEntity(id: 'coin_id')] Coin $coin): Response
+   {
+       $entityManager = $doctrine->getManager();
+       $coins=$cheminDeTraverse->getCoin();
+
+       return $this->render(        
+        'chemin_de_traverse/coinshow.html.twig',
+        [
+            'coins' => $coins,
+            'chemin_de_traverse' => $chemin_de_traverse
+        ]
+       );
+   }   
+  
 }

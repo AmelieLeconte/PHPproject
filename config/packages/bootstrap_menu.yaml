@@ -6,6 +6,6 @@ bootstrap_menu:
         bank:
           label: 'Banks'
           route: 'bank_list'
-        coins:
-          label: 'Coins'
-          route: 'coin_list'
+        # coins:
+        #   label: 'Coins'
+        #   route: 'app_chemin_de_traverse_coin_list'

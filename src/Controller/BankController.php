@@ -4,25 +4,27 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route; // Use Annotation not Attribute here
+use Symfony\Component\Routing\Annotation\Route; 
 use App\Entity\Bank;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface; // Correct import
-use App\Form\BankType; // Correct form import
+use Doctrine\ORM\EntityManagerInterface; 
+use App\Form\BankType;
+use App\Repository\BankRepository;
 
+ #[Route('/bank')]
 class BankController extends AbstractController
 {
-    #[Route('/', name: 'home', methods: ['GET'])]
-    public function indexAction(): Response
+    #[Route( name: 'app_bank_index', methods: ['GET'])]
+    public function index(BankRepository $bankrepository): Response
     {
         return $this->render(
-            'index.html.twig',
-            ['welcome' => "Bienvenue sur votre la page d'inventaire de la banque. Veuillez selectionner bank ou coin dans la barre de selection, pour consulter l'un ou l'autre."]
+            'bank/index.html.twig',
+            ['bank' => $bankrepository->findAll()]
         );
     }
 
-    #[Route('/bank/list', name: 'bank_list', methods: ['GET'])]
+    #[Route('/list', name: 'bank_list', methods: ['GET'])]
     public function listAction(ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
@@ -30,14 +32,14 @@ class BankController extends AbstractController
 
         return $this->render(
             'bank/index.html.twig',
-            ['banks' => $banks] // Changed 'bank' to 'banks' for consistency
+            ['bank' => $banks] 
         );
     }
 
     /**
      * Show a bank
      */
-    #[Route('/bank/{id}', name: 'bank_show', requirements: ['id' => '\d+'])]
+    #[Route('/{id}', name: 'bank_show', requirements: ['id' => '\d+'])]
     public function showAction(Bank $bank): Response
     {
         return $this->render(
@@ -49,7 +51,7 @@ class BankController extends AbstractController
     /**
      * Create a new Bank
      */
-    #[Route('/bank/new', name: 'bank_new', methods: ['GET', 'POST'])] // Fixed route name
+    /* #[Route('/bank/new', name: 'bank_new', methods: ['GET', 'POST'])] 
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $bank = new Bank();
@@ -60,12 +62,12 @@ class BankController extends AbstractController
             $entityManager->persist($bank);
             $entityManager->flush();
 
-            return $this->redirectToRoute('bank_list', [], Response::HTTP_SEE_OTHER); // Redirect to bank_list
+            return $this->redirectToRoute('bank_list', [], Response::HTTP_SEE_OTHER); 
         }
 
-        return $this->render('bank/new.html.twig', [ // Correct template path
-            'bank' => $bank, // Fixed the variable to 'bank'
+        return $this->render('bank/new.html.twig', [
+            'bank' => $bank, 
             'form' => $form,
         ]);
-    }
+    } */
 }

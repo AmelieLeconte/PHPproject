@@ -1,0 +1,24 @@
+
+    {% extends 'base.html.twig' %}
+
+    {% block main %}
+        {% dump coin %} 
+
+            <h1>Coin</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ coin.id }}</td>
+                </tr>
+                <tr>
+                    <th>Coin</th>
+                    <td>{{ coin.value }}</td>
+                </tr>
+                ...
+            </tbody>
+
+        <a href="{{ path('app_chemin_de_traverse_coin_list', {'chemin_de_traverse_id': chemin_de_traverse.id}) }}">back to list</a>
+
+    {% endblock %}  
